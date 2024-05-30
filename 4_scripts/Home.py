@@ -7,24 +7,6 @@ db_path = st.secrets["database"]["path"]
 
 def main():
     # Ler os dados do banco de dados usando pandas
-    df_yahoo_cotacao = pd.read_sql("SELECT * FROM import streamlit as st
-import pandas as pd
-from PIL import Image
-
-# Lendo o caminho do banco de dados a partir dos segredos
-db_path = st.secrets["database"]["path"]
-
-def main():
-    # Ler os dados do banco de dados usando pandas
-    df_yahoo_cotacao = pd.read_sql("SELECT * FROM import streamlit as st
-import pandas as pd
-from PIL import Image
-
-# Lendo o caminho do banco de dados a partir dos segredos
-db_path = st.secrets["database"]["path"]
-
-def main():
-    # Ler os dados do banco de dados usando pandas
     df_yahoo_cotacao = pd.read_sql("SELECT * FROM cotacao_yahoo.db;", f"sqlite:///{db_path}")
 
     # Personalizar o título da página
