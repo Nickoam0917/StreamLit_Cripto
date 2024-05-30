@@ -5,7 +5,34 @@ import sqlalchemy as sqa
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
-from PIL import Image #exibir imagem
+from PIL import Image 
+import sqlite3
+
+
+# Lendo o caminho do banco de dados a partir dos segredos
+db_path = st.secrets["database"]["path"]
+
+def get_db_connection():
+    conn = sqlite3.connect(db_path)
+    return conn
+
+def main():
+    conn = get_db_connection()
+    cur = conn.cursor()
+    
+    # Execute uma consulta SQL
+    cur.execute("SELECT * db_yahoo;")
+    rows = cur.fetchall()
+    
+    # Exibir os resultados no Streamlit
+    for row in rows:
+        st.write(row)
+    
+    cur.close()
+    conn.close()
+
+if __name__ == "__main__":
+    main()
 
 
 #Criar a interface com o banco
