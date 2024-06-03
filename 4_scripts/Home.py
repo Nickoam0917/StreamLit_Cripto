@@ -1,25 +1,15 @@
-# Nicolas Oliveira - RA: 2303181
-# Nírya Giaquinto - RA: 1903778
-
 import os
-import sqlalchemy as sqa 
 import streamlit as st
 import pandas as pd
 from PIL import Image
+import sqlalchemy as sqa 
 
-# Obtendo o diretório atual do script
-script_dir = os.path.dirname(os.path.abspath(__file__))
-
-# Combinando o diretório do script com o nome do arquivo do banco de dados
-db_path = os.path.join(script_dir, 'df_yahoo.db')
-
-# Criar a interface com o banco
-engine = sqa.create_engine(f"sqlite:///{db_path}", echo=True)
+#Criar a interface com o banco
+engine = sqa.create_engine("sqlite:///df_yahoo.db", echo=True)
 conn = engine.connect()
 
-# Ler os dados e criar um dataframe
-df_yahoo = pd.read_sql('SELECT * FROM df_yahoo', con=conn)
-df_yahoo_cotacao = pd.DataFrame(df_yahoo, columns=['name', 'price', 'change', 'per_market', 'market'])
+# Ler os dados do banco de dados em um DataFrame
+df_yahoo = pd.read_sql('cotacao_yahoo.db', con=conn)
 
 # Fechar a conexão com o banco de dados
 conn.close()
@@ -59,4 +49,4 @@ A seguir, apresentamos algumas das principais criptomoedas com suas respectivas 
 """)
 
 st.header('Tabela de Dados Gerais')
-st.dataframe(df_yahoo_cotacao, width=1500, height=500, hide_index=True)
+st.dataframe(df_yahoo, width=1500, height=500, hide_index=True)
