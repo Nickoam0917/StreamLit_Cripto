@@ -1,28 +1,35 @@
 # Nicolas Oliveira - RA: 2303181
 # Nírya Giaquinto - RA: 1903778
 
+import os
 import sqlalchemy as sqa 
 import streamlit as st
 import pandas as pd
-import matplotlib.pyplot as plt
-from PIL import Image 
+from PIL import Image
 
+# Obtendo o diretório atual do script
+script_dir = os.path.dirname(os.path.abspath(__file__))
 
-#Criar a interface com o banco
-engine = sqa.create_engine("sqlite:///df_yahoo.db", echo=True)
+# Combinando o diretório do script com o nome do arquivo do banco de dados
+db_path = os.path.join(script_dir, 'df_yahoo.db')
+
+# Criar a interface com o banco
+engine = sqa.create_engine(f"sqlite:///{db_path}", echo=True)
 conn = engine.connect()
 
-#Ler os dados e criar um dataframe
-df_yahoo= pd.read_sql('cotacao_yahoo.db', con=conn)
+# Ler os dados e criar um dataframe
+df_yahoo = pd.read_sql('SELECT * FROM df_yahoo', con=conn)
 df_yahoo_cotacao = pd.DataFrame(df_yahoo, columns=['name', 'price', 'change', 'per_market', 'market'])
 
-#Personalizar o título da página
+# Fechar a conexão com o banco de dados
+conn.close()
+
+# Personalizar o título da página
 st.set_page_config(
     page_title="Cripto Currencies",
     page_icon="💸",
-    layout="wide")
-
-###### Imagem do App 
+    layout="wide"
+)
 
 # Carregue a imagem da sua logo
 logo = Image.open('bitcoin2.png')  # Substitua 'caminho/para/sua/logo.png' pelo caminho correto para sua imagem
