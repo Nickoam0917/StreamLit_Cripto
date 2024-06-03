@@ -6,13 +6,9 @@ import sqlalchemy as sqa
 
 #Criar a interface com o banco
 engine = sqa.create_engine("sqlite:///df_yahoo.db", echo=True)
-conn = engine.connect()
-
-# Ler os dados do banco de dados em um DataFrame
-df_yahoo = pd.read_sql('cotacao_yahoo.db', con=conn)
-
-# Fechar a conexão com o banco de dados
-conn.close()
+conn = st.connection("sql")
+yahoo = conn.query("select * from yahoo_cotacao")
+st.dataframe(yahoo)
 
 # Personalizar o título da página
 st.set_page_config(
