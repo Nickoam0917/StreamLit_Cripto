@@ -1,21 +1,29 @@
-import os
+
+# Nicolas Oliveira - RA: 2303181
+# Nírya Giaquinto - RA: 1903778
+
+import sqlalchemy as sqa 
 import streamlit as st
 import pandas as pd
-from PIL import Image
-import sqlalchemy as sqa 
+import matplotlib.pyplot as plt
+from PIL import Image #exibir imagem
+
 
 #Criar a interface com o banco
 engine = sqa.create_engine("sqlite:///df_yahoo.db", echo=True)
-conn = st.connection("sql")
-yahoo = conn.query("select * from yahoo_cotacao")
-st.dataframe(yahoo)
+conn = engine.connect()
 
-# Personalizar o título da página
+#Ler os dados e criar um dataframe
+df_yahoo= pd.read_sql('cotacao_yahoo.db', con=conn)
+df_yahoo_cotacao = pd.DataFrame(df_yahoo, columns=['name', 'price', 'change', 'per_market', 'market'])
+
+#Personalizar o título da página
 st.set_page_config(
     page_title="Cripto Currencies",
     page_icon="💸",
-    layout="wide"
-)
+    layout="wide")
+
+###### Imagem do App 
 
 # Carregue a imagem da sua logo
 logo = Image.open('bitcoin2.png')  # Substitua 'caminho/para/sua/logo.png' pelo caminho correto para sua imagem
@@ -45,4 +53,4 @@ A seguir, apresentamos algumas das principais criptomoedas com suas respectivas 
 """)
 
 st.header('Tabela de Dados Gerais')
-st.dataframe(df_yahoo, width=1500, height=500, hide_index=True)
+st.dataframe(df_yahoo_cotacao, width=1500, height=500, hide_index=True)
