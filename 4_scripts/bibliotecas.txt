@@ -1,6 +1,6 @@
 pandas
 plotly
 streamlit
-sqlalchemy==2.0.19
+sqlalchemy
 selenium
 matplotlib
